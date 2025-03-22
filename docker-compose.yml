@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Servicio de PostgreSQL
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: alumnos_8rbt_user
+      POSTGRES_PASSWORD: iiHLa0nbCEYfrGnHRrOeTn2WNVmQ1BkO
+      POSTGRES_DB: alumnos_8rbt
+    networks:
+      - backend
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Servicio de Flask
+  flask_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: "postgresql://alumnos_8rbt_user:iiHLa0nbCEYfrGnHRrOeTn2WNVmQ1BkO@db:5432/alumnos_8rbt"
+    depends_on:
+      - db  # Flask debe esperar a que el contenedor de db esté listo
+    networks:
+      - backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app  # Para que se sincronicen los cambios en el código
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  postgres_data:
