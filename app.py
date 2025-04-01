@@ -1,6 +1,7 @@
 #cambio  tag v1.2.3
 #cambio tag v1.2.4
 #cambio tag v1.2.5
+#cambio tag v1.2.6
 import os
 from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
